@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Penimbangan Truk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Aplikasi Penimbangan Truk</h2>
+    <form action="/submit" method="POST" class="card p-3 shadow-sm mb-4">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">Tanggal</label>
+                <input type="date" class="form-control" name="tanggal" value="{{date}}" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Nama Kapal</label>
+                <input type="text" class="form-control" name="kapal" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Plat Nomor</label>
+                <input type="text" class="form-control" name="plat" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Tonase (kg)</label>
+                <input type="number" class="form-control" name="tonase" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Shift</label>
+                <select name="shift" class="form-select" required>
+                    {% for key, val in shifts.items() %}
+                        <option value="{{key}}">{{key}} ({{val}})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Tujuan Gudang</label>
+                <select name="gudang" class="form-select" required>
+                    {% for gd in gudangs %}
+                        <option>{{gd}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="mt-3 text-end">
+            <button type="submit" class="btn btn-primary">Simpan</button>
+            <a href="/export" class="btn btn-success">Download Rekap Excel</a>
+            <a href="/logout" class="btn btn-secondary">Logout</a>
+        </div>
+    </form>
+
+    <h5>Data Input</h5>
+    <div class="table-responsive">
+    <table class="table table-sm table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Tanggal</th><th>Jam</th><th>Kapal</th><th>Plat</th><th>Tonase</th><th>Shift</th><th>Gudang</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in data %}
+            <tr>
+                <td>{{d.tanggal}}</td><td>{{d.jam}}</td><td>{{d.kapal}}</td><td>{{d.plat}}</td><td>{{d.tonase}}</td><td>{{d.shift}}</td><td>{{d.gudang}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <h5 class="mt-4">Rekap per Shift dan Gudang</h5>
+    <div class="table-responsive">
+    <table class="table table-bordered table-sm">
+        <thead class="table-dark">
+            <tr><th>Tanggal</th><th>Shift</th><th>Gudang</th><th>Total Tonase</th></tr>
+        </thead>
+        <tbody>
+            {% for r in rekap %}
+            <tr><td>{{r.tanggal}}</td><td>{{r.shift}}</td><td>{{r.gudang}}</td><td>{{r.tonase}}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+</body>
+</html>
