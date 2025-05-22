@@ -53,11 +53,9 @@ def home():
     df = pd.read_sql_query("SELECT * FROM data", conn)
     conn.close()
 
-    # Rekap per tanggal, shift, dan gudang
     rekap = df.groupby(['tanggal', 'shift', 'gudang'])['tonase'].sum().reset_index()
-
-    # Rekap per kapal dan EMKL
     rekap_emkl = df.groupby(['kapal', 'emkl'])['tonase'].sum().reset_index()
+    rekap_detailed = df.groupby(['shift', 'gudang', 'emkl', 'kapal'])['tonase'].sum().reset_index()
 
     return render_template(
         'index.html',
@@ -66,7 +64,8 @@ def home():
         emkls=EMKL_LIST,
         data=df.to_dict('records'),
         rekap=rekap.to_dict('records'),
-        rekap_emkl=rekap_emkl.to_dict('records')
+        rekap_emkl=rekap_emkl.to_dict('records'),
+        rekap_detailed=rekap_detailed.to_dict('records')
     )
 
 
