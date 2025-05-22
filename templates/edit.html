@@ -1,0 +1,38 @@
+<form method="POST" class="container mt-4">
+    <h4>Edit Data</h4>
+
+    <label for="tanggal">Tanggal</label>
+    <input id="tanggal" name="tanggal" type="date" value="{{ data.tanggal }}" class="form-control mb-2" required>
+
+    <label for="kapal">Kapal</label>
+    <input id="kapal" name="kapal" type="text" value="{{ data.kapal }}" class="form-control mb-2" required>
+
+    <label for="plat">Plat</label>
+    <input id="plat" name="plat" type="text" value="{{ data.plat }}" class="form-control mb-2" required>
+
+    <label for="tonase">Tonase</label>
+    <input id="tonase" name="tonase" type="number" step="0.01" value="{{ data.tonase }}" class="form-control mb-2" required>
+
+    <label for="shift">Shift</label>
+    <select id="shift" name="shift" class="form-select mb-2" required>
+        {% for k, v in shifts.items() %}
+        <option value="{{ k }}" {% if data.shift == k %}selected{% endif %}>{{ k }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="gudang">Gudang</label>
+    <select id="gudang" name="gudang" class="form-select mb-2" required>
+        {% for g in gudangs %}
+        <option value="{{ g }}" {% if data.gudang == g %}selected{% endif %}>{{ g }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="emkl">EMKL</label>
+    <select id="emkl" name="emkl" class="form-select mb-2" required>
+        {% for e in emkls %}
+        <option value="{{ e }}" {% if data.emkl == e %}selected{% endif %}>{{ e }}</option>
+        {% endfor %}
+    </select>
+
+    <button class="btn btn-primary" type="submit">Simpan Perubahan</button>
+</form>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +8,8 @@
 <body class="bg-light">
 <div class="container mt-4">
     <h2 class="text-center mb-4">Aplikasi Penimbangan Truk</h2>
+
+    <!-- Form Input -->
     <form action="/submit" method="POST" class="card p-3 shadow-sm mb-4">
         <div class="row g-3">
             <div class="col-md-3">
@@ -39,7 +40,15 @@
                 <label class="form-label">Tujuan Gudang</label>
                 <select name="gudang" class="form-select" required>
                     {% for gd in gudangs %}
-                        <option>{{gd}}</option>
+                        <option value="{{gd}}">{{gd}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">EMKL</label>
+                <select name="emkl" class="form-select" required>
+                    {% for e in emkls %}
+                        <option value="{{e}}">{{e}}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -51,36 +60,46 @@
         </div>
     </form>
 
+    <!-- Tabel Data -->
     <h5>Data Input</h5>
     <div class="table-responsive">
-    <table class="table table-sm table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>Tanggal</th><th>Jam</th><th>Kapal</th><th>Plat</th><th>Tonase</th><th>Shift</th><th>Gudang</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for d in data %}
-            <tr>
-                <td>{{d.tanggal}}</td><td>{{d.jam}}</td><td>{{d.kapal}}</td><td>{{d.plat}}</td><td>{{d.tonase}}</td><td>{{d.shift}}</td><td>{{d.gudang}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <table class="table table-sm table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tanggal</th><th>Jam</th><th>Kapal</th><th>Plat</th><th>Tonase</th><th>Shift</th><th>Gudang</th><th>EMKL</th><th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in data %}
+                <tr>
+                    <td>{{d.tanggal}}</td>
+                    <td>{{d.jam}}</td>
+                    <td>{{d.kapal}}</td>
+                    <td>{{d.plat}}</td>
+                    <td>{{d.tonase}}</td>
+                    <td>{{d.shift}}</td>
+                    <td>{{d.gudang}}</td>
+                    <td>{{d.emkl}}</td>
+                    <td><a href="{{ url_for('edit', id=d.id) }}" class="btn btn-sm btn-warning">Edit</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
+    <!-- Rekap Shift -->
     <h5 class="mt-4">Rekap per Shift dan Gudang</h5>
     <div class="table-responsive">
-    <table class="table table-bordered table-sm">
-        <thead class="table-dark">
-            <tr><th>Tanggal</th><th>Shift</th><th>Gudang</th><th>Total Tonase</th></tr>
-        </thead>
-        <tbody>
-            {% for r in rekap %}
-            <tr><td>{{r.tanggal}}</td><td>{{r.shift}}</td><td>{{r.gudang}}</td><td>{{r.tonase}}</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <table class="table table-bordered table-sm">
+            <thead class="table-dark">
+                <tr><th>Tanggal</th><th>Shift</th><th>Gudang</th><th>Total Tonase</th></tr>
+            </thead>
+            <tbody>
+                {% for r in rekap %}
+                <tr><td>{{r.tanggal}}</td><td>{{r.shift}}</td><td>{{r.gudang}}</td><td>{{r.tonase}}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 </body>
